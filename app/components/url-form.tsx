@@ -30,7 +30,7 @@ export default function UrlForm() {
             } 
 
             // set the short url for display
-            setShort(`${window.location.origin}/${alias}`);
+            setShort(`http://localhost:3000/${alias}`);
     
             
         // error handling
@@ -69,7 +69,7 @@ export default function UrlForm() {
                     placeholder="your-custom-alias"
                 />
                 </div>
-
+                
                 {error && <p>{error}</p>}
 
                 <button type="submit">Shorten</button>
