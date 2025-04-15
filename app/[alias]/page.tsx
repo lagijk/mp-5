@@ -5,7 +5,7 @@
 import getCollection, {POSTS_COLLECTION} from "@/db";
 import { redirect } from "next/navigation";
 
-export default async function AliasPage({params}: {params: {alias: string}}) {
+export default async function Page({params}: {params: {alias: string}}) {
     
     try {
         // connect to mongodb and search for alias
@@ -13,16 +13,16 @@ export default async function AliasPage({params}: {params: {alias: string}}) {
         const result = await collection.findOne({alias: params.alias});
         // if alias is not found return to home page
         if (result === null) {
-            return redirect("/");
+            redirect("/");
         }
         console.log("Redirecting to:", result.url);
         // otherwise redirect to original long url
-        return redirect(result.url); 
+        redirect(result.url); 
       
     } catch (err) {
         // error handling
         console.error(err);
-        return redirect("/"); 
+        redirect("/"); 
     }
     
 }
