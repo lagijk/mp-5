@@ -11,12 +11,17 @@ export async function POST(request: Request) {
             return Response.json({ error: "Missing URL or alias"}, {status: 400});
         }
         // checks if url format is valid  
-        // need to somehow validate url
         try {
-            new URL(url);
+            const pattern = new URL(url);
+            const urlPatterns = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const urlname = pattern.hostname;
+            if (!urlPatterns.test(urlname)) {
+                return Response.json({error: "Invalid URL format"}, {status: 400});   
+            }
         } catch {
             return Response.json({error: "Invalid URL format"}, {status: 400});
         }
+
         // connect with MongoDB
         const urlCollection = await getCollection(POSTS_COLLECTION);
 
