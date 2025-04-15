@@ -1,11 +1,10 @@
-// app/[alias]/page.tsx
+// app/[alias]/route.ts
+// route handler that runs on the server only, which allows us to redirect to external urls
 // based on discussion code
-// code source: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirect-function
-
 import getCollection, {POSTS_COLLECTION} from "@/db";
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
-export default async function AliasPage({params}: {params: Promise<{alias: string}>}) {
+export async function GET(request: Request, {params}:{params: Promise<{alias:string}>}) {
     const {alias} = await params;
     try {
         // connect to mongodb and search for alias
@@ -13,16 +12,16 @@ export default async function AliasPage({params}: {params: Promise<{alias: strin
         const result = await collection.findOne({alias});
         // if alias is not found return to home page
         if (result === null) {
-            return redirect("/");
+            return NextResponse.redirect("/");
         }
         console.log("Redirecting to:", result.url);
         // otherwise redirect to original long url
-        return redirect(result.url); 
+        return NextResponse.redirect(result.url); 
       
     } catch (err) {
         // error handling
         console.error(err);
-        return redirect("/"); 
+        return NextResponse.redirect("/"); 
     }
     
 }
