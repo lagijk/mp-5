@@ -4,14 +4,14 @@
 // code source: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirect-function
 
 import getCollection, {POSTS_COLLECTION} from "@/db";
-import { NextResponse } from "next/server";
+import {NextResponse, NextRequest} from "next/server";
 
-export async function GET(request: Request, {params}:{params: {alias:string}}) {
+export async function GET(request: NextRequest, context: {params: {alias:string}}) {
     
     try {
         // connect to mongodb and search for alias
         const collection = await getCollection(POSTS_COLLECTION);
-        const result = await collection.findOne({alias: params.alias});
+        const result = await collection.findOne({alias: context.params.alias});
         // if alias is not found return to home page
         if (result === null) {
             return NextResponse.redirect("/");
