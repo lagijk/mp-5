@@ -10,7 +10,8 @@ export async function POST(request: Request) {
         if (!url || !alias) {
             return Response.json({ error: "Missing URL or alias"}, {status: 400});
         }
-        // checks if url format is valid
+        // checks if url format is valid  
+        // need to somehow validate url
         try {
             new URL(url);
         } catch {

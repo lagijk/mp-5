@@ -26,6 +26,12 @@ export default function UrlForm() {
         setError("");
         setShort("");
 
+        // prevent user from using the same link as the url shortener
+        if (url.startsWith(window.location.origin)) {
+            setError("Invalid URL: Cycled URL are not allowed!")
+            return;
+        }
+
         try {
             const result = await fetch("/api/urlData", {
                 method: 'POST',
@@ -55,6 +61,7 @@ export default function UrlForm() {
         }
        
     };
+    
     // render the UI for shortening url
     return (
         <Paper elevation={4} sx={{ padding: 4, borderRadius: 3 }}>
