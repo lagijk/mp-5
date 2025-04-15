@@ -6,15 +6,15 @@
 import getCollection, {POSTS_COLLECTION} from "@/db";
 import {NextResponse, NextRequest} from "next/server";
 
-export async function GET(request: NextRequest, context: {params: {alias:string}}) {
+export async function GET(request: NextRequest, {params}: {params: {alias:string}}) {
     
     try {
         // connect to mongodb and search for alias
         const collection = await getCollection(POSTS_COLLECTION);
-        const result = await collection.findOne({alias: context.params.alias});
+        const result = await collection.findOne({alias: params.alias});
         // if alias is not found return to home page
         if (result === null) {
-            return NextResponse.redirect("/");
+            return NextResponse.redirect(new URL("/", request.url));
         }
         console.log("Redirecting to:", result.url);
         // otherwise redirect to original long url
