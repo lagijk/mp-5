@@ -1,6 +1,8 @@
 // app/[alias]/route.ts
 // route handler that runs on the server only, which allows us to redirect to external urls
 // based on discussion code
+// code source: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirect-function
+
 import getCollection, {POSTS_COLLECTION} from "@/db";
 import { NextResponse } from "next/server";
 
