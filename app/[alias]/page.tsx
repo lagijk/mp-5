@@ -3,7 +3,6 @@
 // code source: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirect-function
 
 import getCollection, {POSTS_COLLECTION} from "@/db";
-import {NextResponse, NextRequest} from "next/server";
 import { redirect } from "next/navigation";
 
 export default async function AliasPage({params}: {params: {alias: string}}) {
