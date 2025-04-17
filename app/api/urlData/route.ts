@@ -18,6 +18,14 @@ export async function POST(request: Request) {
             if (!urlPatterns.test(urlname)) {
                 return Response.json({error: "Invalid URL format"}, {status: 400});   
             }
+            
+            // checks if the server exists and can respond by using a fetch request
+            try {
+                const result = await fetch(url, {method: "HEAD", redirect: "follow"});
+            } catch {
+                //if the server can't be reached or does not respond, it is invalid
+                return Response.json({error: "Invalid URL format"}, {status: 400});
+            }
         } catch {
             return Response.json({error: "Invalid URL format"}, {status: 400});
         }
