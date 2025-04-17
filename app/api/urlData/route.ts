@@ -22,6 +22,9 @@ export async function POST(request: Request) {
             // checks if the server exists and can respond by using a fetch request
             try {
                 const result = await fetch(url, {method: "HEAD", redirect: "follow"});
+                if (!result.ok) {
+                    return Response.json({error: "Server Error"}, {status: 400});
+                }
             } catch {
                 //if the server can't be reached or does not respond, it is invalid
                 return Response.json({error: "Invalid URL format"}, {status: 400});
